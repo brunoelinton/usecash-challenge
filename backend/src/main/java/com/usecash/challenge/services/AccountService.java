@@ -23,4 +23,14 @@ public class AccountService {
 
 		return list.stream().map(acc -> new AccountDTO(acc)).collect(Collectors.toList());
 	}
+
+	@Transactional
+	public AccountDTO insert(AccountDTO dto) {
+		Account entity = new Account();
+		entity.setName(dto.getName());
+		entity.setName(dto.getCpf());
+		
+		entity = repository.save(entity);
+		return new AccountDTO(entity);
+	}
 }
