@@ -4,12 +4,25 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.ColumnDefault;
+
+@Entity
+@Table(name = "tb_account")
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String cpf;
+	@ColumnDefault("0")
 	private BigDecimal balance;
 	
 	public Account() {
@@ -19,7 +32,6 @@ public class Account implements Serializable {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
-		balance = new BigDecimal(0.0);
 	}
 
 	public Long getId() {
