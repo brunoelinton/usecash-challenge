@@ -10,23 +10,20 @@ public class AccountDTO implements Serializable {
 	
 	private Long id;
 	private String name;
-	private String cpf;
 	private BigDecimal balance;
 	
 	public AccountDTO() {
 	}
 
-	public AccountDTO(Long id, String name, String cpf, BigDecimal balance) {
+	public AccountDTO(Long id, String name, BigDecimal balance) {
 		this.id = id;
 		this.name = name;
-		this.cpf = cpf;
 		this.balance = balance;
 	}
 	
 	public AccountDTO(Account entity) {
 		id = entity.getId();
 		name = entity.getName();
-		cpf = entity.getCpf();
 		balance = entity.getBalance();
 	}
 
@@ -44,14 +41,6 @@ public class AccountDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 
 	public BigDecimal getBalance() {

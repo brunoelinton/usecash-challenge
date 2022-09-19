@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
-
 @Entity
 @Table(name = "tb_account")
 public class Account implements Serializable {
@@ -22,16 +20,16 @@ public class Account implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
-	@ColumnDefault("0")
 	private BigDecimal balance;
 	
 	public Account() {
 	}
 
-	public Account(Long id, String name, String cpf) {
+	public Account(Long id, String name, String cpf, BigDecimal balance) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
+		this.balance = balance;
 	}
 
 	public Long getId() {
@@ -66,7 +64,8 @@ public class Account implements Serializable {
 		if (amount.compareTo(new BigDecimal(0.0)) <= 0) 
 			return false;		
 		
-		balance.add(amount);
+		balance = balance.add(amount);
+		System.out.println("depositou");
 		return true;
 	}
 	
@@ -74,7 +73,7 @@ public class Account implements Serializable {
 		if (amount.compareTo(balance) == 1) 
 			return false;
 		
-		balance.subtract(amount);
+		balance = balance.subtract(amount);
 		return true;		
 	}
 
