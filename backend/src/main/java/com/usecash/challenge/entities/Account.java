@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_account")
+@Table(name = "TB_ACCOUNT")
 public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -20,16 +21,16 @@ public class Account implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
-	private BigDecimal balance;
+	@Column(columnDefinition="Decimal(10,2) default '0.00'")
+	private BigDecimal balance = BigDecimal.ZERO;
 	
 	public Account() {
 	}
 
-	public Account(Long id, String name, String cpf, BigDecimal balance) {
+	public Account(Long id, String name, String cpf) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
-		this.balance = balance;
 	}
 
 	public Long getId() {
@@ -92,8 +93,5 @@ public class Account implements Serializable {
 			return false;
 		Account other = (Account) obj;
 		return Objects.equals(id, other.id);
-	}
-	
-	
-	
+	}		
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.usecash.challenge.accounts.dto.AccountDTO;
+import com.usecash.challenge.accounts.dto.DepositDTO;
 import com.usecash.challenge.entities.Account;
 import com.usecash.challenge.repositories.AccountRepository;
 import com.usecash.challenge.services.exceptions.ResourceNotFoundException;
@@ -38,20 +39,33 @@ public class AccountService {
 	public AccountDTO insert(AccountDTO dto) {
 		Account entity = new Account();
 		entity.setName(dto.getName());
-		
+		entity.setCpf(dto.getCpf());
 		entity = repository.save(entity);
 		return new AccountDTO(entity);
 	}
-
+	
 	@Transactional
 	public AccountDTO update(Long id, AccountDTO dto) {
 		try {
 			Account entity = repository.getReferenceById(id);
-			entity.deposit(dto.getBalance());
+			entity.setName(dto.getName());
+			entity.setCpf(dto.getCpf());
 			entity = repository.save(entity);
 			return new AccountDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found: " + id);
+		}
+	}
+	
+	@Transactional
+	public AccountDTO depositAccount(DepositDTO dto) {
+		try {
+			Account entity = repository.getReferenceById(dto.getIdAccount());
+			entity.deposit(dto.getAmount());
+			entity = repository.save(entity);
+			return new AccountDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found: " + dto.getIdAccount());
 		}
 	}
 }

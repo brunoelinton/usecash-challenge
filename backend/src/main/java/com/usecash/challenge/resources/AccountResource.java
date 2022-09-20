@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.usecash.challenge.accounts.dto.AccountDTO;
+import com.usecash.challenge.accounts.dto.DepositDTO;
 import com.usecash.challenge.services.AccountService;
 
 @RestController
@@ -49,10 +50,15 @@ public class AccountResource {
 					.toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-	
+
 	@PutMapping(value = "/{id}" )
 	public ResponseEntity<AccountDTO> updateAccount(@PathVariable Long id, @RequestBody AccountDTO dto) {
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
+	}
+	
+	@PutMapping()
+	public ResponseEntity<AccountDTO> depositAccount(@RequestBody DepositDTO dto) {
+		return ResponseEntity.ok().body(service.depositAccount(dto));
 	}
 }
